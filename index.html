@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Monitoring Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .dashboard {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .metrics {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .metric {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        .metric h2 {
+            margin-bottom: 5px;
+            font-size: 1.2em;
+            color: #495057;
+        }
+        .metric p {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0;
+            color: #007bff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h1>Crop Monitoring Dashboard</h1>
+        <div class="metrics">
+            <div class="metric">
+                <h2>Average Soil Moisture</h2>
+                <p id="avgMoisture">--%</p>
+            </div>
+            <div class="metric">
+                <h2>Average Crop Health</h2>
+                <p id="avgHealth">--%</p>
+            </div>
+            <div class="metric">
+                <h2>Average Pest Level</h2>
+                <p id="avgPests">--%</p>
+            </div>
+            <div class="metric">
+                <h2>Average Weed Coverage</h2>
+                <p id="avgWeeds">--%</p>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Moisture</th>
+                    <th>Health</th>
+                    <th>Pests</th>
+                    <th>Weeds</th>
+                </tr>
+            </thead>
+            <tbody id="fieldData">
+                <!-- Field data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const data = [
+            { name: 'Field A', moisture: 65, health: 80, pests: 10, weeds: 15 },
+            { name: 'Field B', moisture: 55, health: 70, pests: 15, weeds: 25 },
+            { name: 'Field C', moisture: 75, health: 90, pests: 5, weeds: 5 },
+            { name: 'Field D', moisture: 60, health: 75, pests: 20, weeds: 20 },
+        ];
+
+        function updateDashboard() {
+            const avgMoisture = data.reduce((sum, field) => sum + field.moisture, 0) / data.length;
+            const avgHealth = data.reduce((sum, field) => sum + field.health, 0) / data.length;
+            const avgPests = data.reduce((sum, field) => sum + field.pests, 0) / data.length;
+            const avgWeeds = data.reduce((sum, field) => sum + field.weeds, 0) / data.length;
+
+            document.getElementById('avgMoisture').textContent = `${avgMoisture.toFixed(1)}%`;
+            document.getElementById('avgHealth').textContent = `${avgHealth.toFixed(1)}%`;
+            document.getElementById('avgPests').textContent = `${avgPests.toFixed(1)}%`;
+            document.getElementById('avgWeeds').textContent = `${avgWeeds.toFixed(1)}%`;
+
+            const fieldDataHTML = data.map(field => `
+                <tr>
+                    <td>${field.name}</td>
+                    <td>${field.moisture}%</td>
+                    <td>${field.health}%</td>
+                    <td>${field.pests}%</td>
+                    <td>${field.weeds}%</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('fieldData').innerHTML = fieldDataHTML;
+        }
+
+        updateDashboard();
+    </script>
+</body>
+</html>
